@@ -1,0 +1,32 @@
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+
+        {% if breadcrumbs|length > 0 %}
+
+            {% set lastIndex = breadcrumbs|length - 1 %}
+            {% set lastItem = breadcrumbs|last %}
+
+            {% for item in breadcrumbs|slice(0, lastIndex) %}
+                <li class="breadcrumb-item">
+                    <a href="{{ item.url }}">
+                        {% if item.translate %}
+                            {{ item.text|trans(item.translationParameters, item.translationDomain) }}
+                        {% else %}
+                            {{ item.text }}
+                        {% endif %}
+                    </a>
+                </li>
+            {% endfor %}
+
+            <li class="breadcrumb-item active" aria-current="page">
+                {% if lastItem.translate %}
+                    {{ lastItem.text|trans(lastItem.translationParameters, lastItem.translationDomain) }}
+                {% else %}
+                    {{ lastItem.text }}
+                {% endif %}
+            </li>
+
+        {% endif %}
+
+    </ol>
+</nav>

@@ -1,0 +1,6 @@
+{% if notifications|length > 0 %}
+    {% for notification in notifications %}
+        <section class="invisible" data-notification="{{ notification.text }}"
+                 data-notification-type="{{ notification.type }}"></section>
+    {% endfor %}
+{% endif %}

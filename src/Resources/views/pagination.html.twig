@@ -1,0 +1,28 @@
+<nav aria-label="{{ 'Pagination'|trans }}">
+    <ul class="pagination justify-content-end">
+
+        <li class="page-item {{ current_page == 1 ? 'disabled' }}">
+            <a class="page-link" aria-label="{{ 'Previous'|trans }}"
+               href="{{ path(route, {page: current_page - 1 < 1 ? 1 : current_page - 1}) }}">
+                <i class="fa fa-angle-left" aria-hidden="true"></i>
+            </a>
+        </li>
+
+        {% if max_pages == 0 %}
+            {% set max_pages = 1 %}
+        {% endif %}
+
+        {% for i in 1..max_pages %}
+            <li class="page-item {{ current_page == i ? 'active' }}">
+                <a class="page-link" href="{{ path(route, {page: i}) }}">{{ i }}</a>
+            </li>
+        {% endfor %}
+
+        <li class="page-item {{ current_page == max_pages ? 'disabled' }}">
+            <a class="page-link" aria-label="{{ 'Next'|trans }}"
+               href="{{ path(route, {page: current_page + 1 <= max_pages ? current_page + 1 : current_page}) }}">
+                <i class="fa fa-angle-right" aria-hidden="true"></i>
+            </a>
+        </li>
+    </ul>
+</nav>
