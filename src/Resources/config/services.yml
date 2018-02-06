@@ -1,0 +1,6 @@
+services:
+    Adamski\Symfony\HelpersBundle\Twig\BreadcrumbsExtension:
+        autowire: true
+        public: true
+        tags:
+            - { name: twig.extension }
