@@ -45,7 +45,7 @@ class NotificationExtension extends AbstractExtension {
 
         if (count($storedNotifications) > 0) {
             try {
-                return $environment->render("notification.html.twig", ["notifications" => $storedNotifications]);
+                return $environment->render("@Helpers/notification.html.twig", ["notifications" => $storedNotifications]);
             } catch (\Exception $exception) {
                 return false;
             }

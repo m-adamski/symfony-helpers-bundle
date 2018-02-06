@@ -4,10 +4,16 @@ services:
         arguments:
             - "@router"
 
+    Adamski\Symfony\HelpersBundle\Helper\BreadcrumbsHelper:
+        alias: helpers_bundle.helper.breadcrumbs
+
     helpers_bundle.helper.directory:
         class: Adamski\Symfony\HelpersBundle\Helper\DirectoryHelper
         arguments:
             - "@service_container"
+
+    Adamski\Symfony\HelpersBundle\Helper\DirectoryHelper:
+        alias: helpers_bundle.helper.directory
 
     helpers_bundle.helper.mailer:
         class: Adamski\Symfony\HelpersBundle\Helper\MailerHelper
@@ -16,10 +22,16 @@ services:
             - "@twig"
             - "%helpers.mailer.default_sender%"
 
+    Adamski\Symfony\HelpersBundle\Helper\MailerHelper:
+        alias: helpers_bundle.helper.mailer
+
     helpers_bundle.helper.notification:
         class: Adamski\Symfony\HelpersBundle\Helper\NotificationHelper
         arguments:
             - "@session.flash_bag"
+
+    Adamski\Symfony\HelpersBundle\Helper\NotificationHelper:
+        alias: helpers_bundle.helper.notification
 
     helpers_bundle.helper.pagination:
         class: Adamski\Symfony\HelpersBundle\Helper\PaginationHelper
@@ -27,11 +39,17 @@ services:
             - "@session"
             - "@router"
 
+    Adamski\Symfony\HelpersBundle\Helper\PaginationHelper:
+        alias: helpers_bundle.helper.pagination
+
     helpers_bundle.helper.pdf:
         class: Adamski\Symfony\HelpersBundle\Helper\PDFHelper
         arguments:
             - "@helpers_bundle.helper.directory"
             - "@twig"
+
+    Adamski\Symfony\HelpersBundle\Helper\PDFHelper:
+        alias: helpers_bundle.helper.pdf
 
     helpers_bundle.twig.extension.breadcrumbs:
         class: Adamski\Symfony\HelpersBundle\Twig\BreadcrumbsExtension

@@ -30,7 +30,7 @@ class PaginationExtension extends AbstractExtension {
      */
     public function renderPagination(Environment $environment, Paginator $paginator, string $route, int $page = 1, int $limit = 20) {
         try {
-            return $environment->render("pagination.html.twig", [
+            return $environment->render("@Helpers/pagination.html.twig", [
                 "current_page" => $page,
                 "max_pages"    => ceil($paginator->count() / $limit),
                 "route"        => $route

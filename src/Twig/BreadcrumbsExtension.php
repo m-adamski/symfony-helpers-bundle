@@ -52,7 +52,7 @@ class BreadcrumbsExtension extends AbstractExtension {
         $breadcrumbs = empty($namespace) ? $this->breadcrumbsHelper->getNamespaceBreadcrumbs() : $this->breadcrumbsHelper->getNamespaceBreadcrumbs($namespace);
 
         try {
-            return $environment->render("breadcrumbs.html.twig", ["breadcrumbs" => $breadcrumbs]);
+            return $environment->render("@Helpers/breadcrumbs.html.twig", ["breadcrumbs" => $breadcrumbs]);
         } catch (\Exception $exception) {
             return false;
         }
