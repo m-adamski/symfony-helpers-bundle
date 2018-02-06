@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Twig;
+namespace Adamski\Symfony\HelpersBundle\Twig;
 
 use Adamski\Symfony\HelpersBundle\Helper\NotificationHelper;
 use Twig\Environment;

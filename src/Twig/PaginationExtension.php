@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Twig;
+namespace Adamski\Symfony\HelpersBundle\Twig;
 
 use Doctrine\ORM\Tools\Pagination\Paginator;
 use Twig\Environment;

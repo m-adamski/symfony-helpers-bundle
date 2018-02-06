@@ -1,6 +1,54 @@
 services:
-    Adamski\Symfony\HelpersBundle\Twig\BreadcrumbsExtension:
-        autowire: true
-        public: true
+    helpers_bundle.helper.breadcrumbs:
+        class: Adamski\Symfony\HelpersBundle\Helper\BreadcrumbsHelper
+        arguments:
+            - "@router"
+
+    helpers_bundle.helper.directory:
+        class: Adamski\Symfony\HelpersBundle\Helper\DirectoryHelper
+        arguments:
+            - "@service_container"
+
+    helpers_bundle.helper.mailer:
+        class: Adamski\Symfony\HelpersBundle\Helper\MailerHelper
+        arguments:
+            - "@mailer"
+            - "@twig"
+            - "%mailer.default_sender%"
+
+    helpers_bundle.helper.notification:
+        class: Adamski\Symfony\HelpersBundle\Helper\NotificationHelper
+        arguments:
+            - "@session.flash_bag"
+
+    helpers_bundle.helper.pagination:
+        class: Adamski\Symfony\HelpersBundle\Helper\PaginationHelper
+        arguments:
+            - "@session"
+            - "@router"
+
+    helpers_bundle.helper.pdf:
+        class: Adamski\Symfony\HelpersBundle\Helper\PDFHelper
+        arguments:
+            - "@helpers_bundle.helper.directory"
+            - "@twig"
+
+    helpers_bundle.twig.extension.breadcrumbs:
+        class: Adamski\Symfony\HelpersBundle\Twig\BreadcrumbsExtension
+        arguments:
+            - "@helpers_bundle.helper.breadcrumbs"
+            - "@translator"
+        tags:
+            - { name: twig.extension }
+
+    helpers_bundle.twig.extension.notification:
+        class: Adamski\Symfony\HelpersBundle\Twig\NotificationExtension
+        arguments:
+            - "@helpers_bundle.helper.notification"
+        tags:
+            - { name: twig.extension }
+
+    helpers_bundle.twig.extension.pagination:
+        class: Adamski\Symfony\HelpersBundle\Twig\PaginationExtension
         tags:
             - { name: twig.extension }
