@@ -14,7 +14,7 @@ services:
         arguments:
             - "@mailer"
             - "@twig"
-            - "%mailer.default_sender%"
+            - "%helpers_bundle.mailer.default_sender%"
 
     helpers_bundle.helper.notification:
         class: Adamski\Symfony\HelpersBundle\Helper\NotificationHelper

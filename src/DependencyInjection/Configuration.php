@@ -14,12 +14,15 @@ class Configuration implements ConfigurationInterface {
      */
     public function getConfigTreeBuilder() {
         $treeBuilder = new TreeBuilder();
-        $treeBuilder
-            ->root("mailer")
+        $rootNode = $treeBuilder->root("helpers_bundle");
+
+        $rootNode
             ->children()
-            ->scalarNode("default_sender")
-            ->defaultValue("noreply@example.com")
-            ->end()
+                ->arrayNode("mailer")
+                    ->children()
+                        ->scalarNode("default_sender")->defaultValue("noreply@example.com")->end()
+                    ->end()
+                ->end()
             ->end();
 
         return $treeBuilder;
