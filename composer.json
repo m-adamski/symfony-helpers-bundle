@@ -13,6 +13,7 @@
     "require": {
         "php": "^7.1",
         "cakephp/chronos": "^1.1",
+        "symfony/filesystem": "^4.0",
         "symfony/framework-bundle": "^4.0",
         "symfony/orm-pack": "^1.0",
         "symfony/swiftmailer-bundle": "^3.1",

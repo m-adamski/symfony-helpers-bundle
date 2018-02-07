@@ -4,9 +4,10 @@ namespace Adamski\Symfony\HelpersBundle\Helper;
 
 use Cake\Chronos\Chronos;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\File\File;
 
-class DirectoryHelper {
+class DirectoryHelper extends Filesystem {
 
     /**
      * @var ContainerInterface
