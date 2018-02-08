@@ -5,6 +5,7 @@ namespace Adamski\Symfony\HelpersBundle\Helper;
 use Cake\Chronos\Chronos;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\Finder\Finder;
 use Symfony\Component\HttpFoundation\File\File;
 
 class DirectoryHelper extends Filesystem {
@@ -13,6 +14,11 @@ class DirectoryHelper extends Filesystem {
      * @var ContainerInterface
      */
     protected $container;
+
+    /**
+     * @var Finder
+     */
+    protected $finder;
 
     /**
      * @var string
@@ -61,6 +67,7 @@ class DirectoryHelper extends Filesystem {
      */
     public function __construct(ContainerInterface $container) {
         $this->container = $container;
+        $this->finder = new Finder();
 
         $this->projectDirectory = $this->container->getParameter("kernel.project_dir");
         $this->sourceDirectory = $this->container->getParameter("kernel.root_dir");
@@ -111,6 +118,13 @@ class DirectoryHelper extends Filesystem {
      */
     public function getLibrariesDirectory() {
         return $this->librariesDirectory;
+    }
+
+    /**
+     * @return Finder
+     */
+    public function getFinder() {
+        return $this->finder;
     }
 
     /**
