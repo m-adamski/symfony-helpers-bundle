@@ -70,3 +70,11 @@ services:
         class: Adamski\Symfony\HelpersBundle\Twig\PaginationExtension
         tags:
             - { name: twig.extension }
+
+    helpers_bundle.twig.extension.asset_hash:
+        class: Adamski\Symfony\HelpersBundle\Twig\AssetHashExtension
+        arguments:
+            - "@templating.helper.assets"
+            - "@helpers_bundle.helper.directory"
+        tags:
+            - { name: twig.extension }

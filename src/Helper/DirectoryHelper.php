@@ -53,12 +53,22 @@ class DirectoryHelper extends Filesystem {
     /**
      * @var string
      */
+    protected $publicDirectory;
+
+    /**
+     * @var string
+     */
     protected $librariesDirectoryName = "libraries";
 
     /**
      * @var string
      */
     protected $temporaryDirectoryName = "temp";
+
+    /**
+     * @var string
+     */
+    protected $publicDirectoryName = "public";
 
     /**
      * DirectoryHelper constructor.
@@ -75,6 +85,7 @@ class DirectoryHelper extends Filesystem {
         $this->logsDirectory = $this->container->getParameter("kernel.logs_dir");
         $this->librariesDirectory = $this->projectDirectory . DIRECTORY_SEPARATOR . $this->librariesDirectoryName;
         $this->temporaryDirectory = $this->projectDirectory . DIRECTORY_SEPARATOR . "var" . DIRECTORY_SEPARATOR . $this->temporaryDirectoryName;
+        $this->publicDirectory = $this->projectDirectory . DIRECTORY_SEPARATOR . $this->publicDirectoryName;
     }
 
     /**
@@ -118,6 +129,13 @@ class DirectoryHelper extends Filesystem {
      */
     public function getLibrariesDirectory() {
         return $this->librariesDirectory;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPublicDirectory() {
+        return $this->publicDirectory;
     }
 
     /**
@@ -315,5 +333,15 @@ class DirectoryHelper extends Filesystem {
         }
 
         return [$removedFilesCount, $removedDirectoriesCount];
+    }
+
+    /**
+     * Get real-path for specified path.
+     *
+     * @param string $value
+     * @return bool|string
+     */
+    public function getRealpath(string $value) {
+        return realpath($value);
     }
 }
