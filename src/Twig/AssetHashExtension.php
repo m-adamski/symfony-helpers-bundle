@@ -73,7 +73,7 @@ class AssetHashExtension extends AbstractExtension {
         return $this->directoryHelper->getRealpath(
             $this->directoryHelper->generatePath([
                 $this->directoryHelper->getPublicDirectory(), $value
-            ])
+            ], true)
         );
     }
 }
