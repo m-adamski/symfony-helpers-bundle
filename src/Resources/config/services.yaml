@@ -74,7 +74,7 @@ services:
     helpers_bundle.twig.extension.asset_hash:
         class: Adamski\Symfony\HelpersBundle\Twig\AssetHashExtension
         arguments:
-            - "@templating.helper.assets"
+            - "@assets.packages"
             - "@helpers_bundle.helper.directory"
         tags:
             - { name: twig.extension }

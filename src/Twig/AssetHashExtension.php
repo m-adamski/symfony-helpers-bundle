@@ -3,16 +3,16 @@
 namespace Adamski\Symfony\HelpersBundle\Twig;
 
 use Adamski\Symfony\HelpersBundle\Helper\DirectoryHelper;
-use Symfony\Bundle\FrameworkBundle\Templating\Helper\AssetsHelper;
+use Symfony\Component\Asset\Packages;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
 
 class AssetHashExtension extends AbstractExtension {
 
     /**
-     * @var AssetsHelper
+     * @var Packages
      */
-    protected $assetsHelper;
+    protected $packages;
 
     /**
      * @var DirectoryHelper
@@ -22,11 +22,11 @@ class AssetHashExtension extends AbstractExtension {
     /**
      * AssetHashExtension constructor.
      *
-     * @param AssetsHelper    $assetsHelper
+     * @param Packages        $packages
      * @param DirectoryHelper $directoryHelper
      */
-    public function __construct(AssetsHelper $assetsHelper, DirectoryHelper $directoryHelper) {
-        $this->assetsHelper = $assetsHelper;
+    public function __construct(Packages $packages, DirectoryHelper $directoryHelper) {
+        $this->packages = $packages;
         $this->directoryHelper = $directoryHelper;
     }
 
@@ -50,7 +50,7 @@ class AssetHashExtension extends AbstractExtension {
 
         if (!$this->isURL($value)) {
             if ($filePath = $this->getRealPath($value)) {
-                return sprintf($format, $this->assetsHelper->getUrl($value), md5_file($filePath));
+                return sprintf($format, $this->packages->getUrl($value), md5_file($filePath));
             }
         }
 
