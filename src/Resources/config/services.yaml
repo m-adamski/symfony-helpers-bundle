@@ -29,6 +29,7 @@ services:
         class: Adamski\Symfony\HelpersBundle\Helper\NotificationHelper
         arguments:
             - "@session.flash_bag"
+            - "@router.default"
 
     Adamski\Symfony\HelpersBundle\Helper\NotificationHelper:
         alias: helpers_bundle.helper.notification
