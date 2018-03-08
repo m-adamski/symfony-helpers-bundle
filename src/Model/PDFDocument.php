@@ -275,7 +275,7 @@ class PDFDocument {
 
         // Define custom font paths
         $customFontPath = $this->directoryHelper->generatePath([
-            $this->directoryHelper->getLibrariesDirectory(), "pdf-generator", "fonts", "lato", "lato-regular.ttf"
+            $this->directoryHelper->getLibrariesDirectory(), "pdf-generator", "fonts", "Lato2OFL", "LatoRegular.ttf"
         ], true);
 
         // Register new font with TCPDF Font tool
@@ -350,12 +350,12 @@ class PDFDocument {
         /**
          * Document creator.
          */
-        define("PDF_CREATOR", "CRM");
+        define("PDF_CREATOR", "");
 
         /**
          * Document author.
          */
-        define("PDF_AUTHOR", "CRM");
+        define("PDF_AUTHOR", "");
 
         /**
          * Header title.
