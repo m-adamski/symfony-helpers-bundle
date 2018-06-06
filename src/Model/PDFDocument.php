@@ -405,7 +405,7 @@ class PDFDocument {
         /**
          * Default main font name.
          */
-        define("PDF_FONT_NAME_MAIN", "helvetica");
+        define("PDF_FONT_NAME_MAIN", "lato");
 
         /**
          * Default main font size.
@@ -415,7 +415,7 @@ class PDFDocument {
         /**
          * Default data font name.
          */
-        define("PDF_FONT_NAME_DATA", "helvetica");
+        define("PDF_FONT_NAME_DATA", "lato");
 
         /**
          * Default data font size.
