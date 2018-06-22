@@ -106,11 +106,69 @@ As in the case of Breadcrumbs Helper, we must also add a call to the correspondi
 
 ## Pagination Helper
 
-The documentation will be completed.
+To be able to use Pagination Helper, several changes are required in both the controller and the entity repository. Sample controller function:
+
+```(php)
+public function index(Request $request, int $page) {
+    return $this->render("modules/News/index.html.twig", [
+        "page" => $page,
+        "news" => $this->paginationHelper->responseData($request, $this->newsRepository, $page)
+    ]);
+}
+```
+
+As you can see the ``responseData`` function requires three parameters. One of them is the repository of the entity we are paging. Now we need to make changes in the entity repository - repository class have to extends ``Adamski\Symfony\HelpersBundle\Model\PaginableRepository`` and implement ``getPaginated`` function:
+
+```(php)
+public function getPaginated(int $page = 1, int $limit = 20) {
+    $queryBuilder = $this->getEntityManager()->getRepository("App:News")
+        ->createQueryBuilder("news");
+
+    $queryBuilder->where($queryBuilder->expr()->eq("news.public", true))
+        ->orderBy("news.createdAt", "DESC");
+
+    return $this->paginate($queryBuilder->getQuery(), $page, $limit);
+}
+```
+
+Now just add function to render the pagination component in template.
+
+```
+{{ pagination(news, "news.index", page) }}
+```
 
 ## PDF Helper
 
-The documentation will be completed.
+PDF Helper offers only one function - ``initDocument``. This function create PDFDocument object which provides some useful functions needed to create a PDF document. Below is an example of using PDF Helper:
+
+```(php)
+$pdfName = "Sample PDF document";
+
+// Generate PDF template
+$documentContent = $this->renderView("pdf/document-content.html.twig", [
+    "data" => $data
+]);
+
+// Generate PDF document
+$pdfDocument = $this->pdfHelper->initDocument();
+$pdfDocument->setTitle($pdfName);
+$pdfDocument->setAuthor("Author");
+$pdfDocument->setCreator("Creatot");
+$pdfDocument->setFooter($pdfName);
+$pdfDocument->writeHTML($documentContent);
+
+// Generate response
+$response = new Response(
+    $pdfDocument->output($pdfName)
+);
+
+$response->headers->set("Content-Type", "application/pdf");
+$response->headers->set("Content-Disposition", "attachment; filename=\"" . $pdfName . ".pdf\"");
+
+return $response;
+```
+
+In the example shown, the template file is rendered, and then the HTML code is inserted as the content of the new PDF document. In addition, the parameters of the PDF file are set.
 
 ## License
 
