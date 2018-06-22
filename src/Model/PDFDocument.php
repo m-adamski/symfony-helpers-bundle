@@ -68,6 +68,9 @@ class PDFDocument {
         // Include config
         $this->includeConfig();
 
+        // Add custom fonts
+        $this->registerCustomFont();
+
         // Create new TCPDF instance and set default options
         $this->pdfGenerator = new PDFGenerator($orientation, $unit, $format, $unicode, $encoding);
         $this->pdfGenerator->setPrintHeader(false);
@@ -146,6 +149,17 @@ class PDFDocument {
                 $instance->Cell($pagesCellWidth, 10, $pagesPrefix . $instance->getAliasNumPage() . "/" . $instance->getAliasNbPages() . $pagesPostfix, 0, false, $pagesAlign);
             }
         });
+    }
+
+    /**
+     * Set font.
+     *
+     * @param string   $family
+     * @param string   $style
+     * @param int|null $size
+     */
+    public function setFont(string $family, string $style = "N", ?int $size = null) {
+        $this->pdfGenerator->SetFont($family, $style, $size);
     }
 
     /**
@@ -267,19 +281,29 @@ class PDFDocument {
     }
 
     /**
-     * Register new custom font and return it name.
+     * Register new custom fonts.
+     */
+    protected function registerCustomFont() {
+
+        // Define custom font paths
+        $customFontPath = $this->directoryHelper->generatePath([
+            $this->directoryHelper->getLibrariesDirectory(), "pdf-generator", "fonts", "Lato2OFL"
+        ], false);
+
+        // Register new font with TCPDF Font tool
+        TCPDF_FONTS::addTTFfont($customFontPath . "Lato-Regular.ttf", "TrueTypeUnicode", "");
+        TCPDF_FONTS::addTTFfont($customFontPath . "Lato-Bold.ttf", "TrueTypeUnicode", "");
+        TCPDF_FONTS::addTTFfont($customFontPath . "Lato-BoldItalic.ttf", "TrueTypeUnicode", "");
+        TCPDF_FONTS::addTTFfont($customFontPath . "Lato-Italic.ttf", "TrueTypeUnicode", "");
+    }
+
+    /**
+     * Return name of custom default font.
      *
      * @return string
      */
     protected function getDefaultFont() {
-
-        // Define custom font paths
-        $customFontPath = $this->directoryHelper->generatePath([
-            $this->directoryHelper->getLibrariesDirectory(), "pdf-generator", "fonts", "Lato2OFL", "Lato-Regular.ttf"
-        ], true);
-
-        // Register new font with TCPDF Font tool
-        return TCPDF_FONTS::addTTFfont($customFontPath, "TrueTypeUnicode", "");
+        return "Lato";
     }
 
     /**
@@ -405,7 +429,7 @@ class PDFDocument {
         /**
          * Default main font name.
          */
-        define("PDF_FONT_NAME_MAIN", "lato");
+        define("PDF_FONT_NAME_MAIN", "Lato");
 
         /**
          * Default main font size.
@@ -415,7 +439,7 @@ class PDFDocument {
         /**
          * Default data font name.
          */
-        define("PDF_FONT_NAME_DATA", "lato");
+        define("PDF_FONT_NAME_DATA", "Lato");
 
         /**
          * Default data font size.
@@ -425,7 +449,7 @@ class PDFDocument {
         /**
          * Default monospaced font name.
          */
-        define("PDF_FONT_MONOSPACED", "courier");
+        define("PDF_FONT_MONOSPACED", "Courier");
 
         /**
          * Ratio used to adjust the conversion of pixels to user units.
