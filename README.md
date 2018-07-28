@@ -47,9 +47,13 @@ The Directory tool was created for faster directory management. With its help, y
 
 ## Mailer Helper
 
-As the name says, the Mailer Helper is used to send email messages. It has only one function:
+As the name says, the Mailer Helper is used to send email messages. Helper contain two functions:
 
-* sendMessage(array $recipients, string $subject, string $template, array $data = [], array $attachments = [], string $sender = null, array $recipientsBCC = [], array $recipientsCC = [])
+* buildMessage(?string $subject = null, ?string $body = null, ?string $contentType = null, ?string $charset = null)
+* sendMessage(MailerMessage $mailerMessage, ?array &$failedRecipients = null)
+
+The first function generates an instance of the MailerMessage class, which extends the basic class Swift_Message. 
+The other one tries to send the generated message.
 
 ### How to use it?
 

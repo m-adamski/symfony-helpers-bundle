@@ -18,9 +18,10 @@ services:
     helpers_bundle.helper.mailer:
         class: Adamski\Symfony\HelpersBundle\Helper\MailerHelper
         arguments:
+            - "%helpers.mailer.sender_address%"
+            - "%helpers.mailer.sender_name%"
             - "@mailer"
             - "@twig"
-            - "%helpers.mailer.default_sender%"
 
     Adamski\Symfony\HelpersBundle\Helper\MailerHelper:
         alias: helpers_bundle.helper.mailer

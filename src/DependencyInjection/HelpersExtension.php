@@ -16,7 +16,8 @@ class HelpersExtension extends Extension {
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);
 
-        $container->setParameter("helpers.mailer.default_sender", $config["mailer"]["default_sender"]);
+        $container->setParameter("helpers.mailer.sender_address", $config["mailer"]["sender_address"]);
+        $container->setParameter("helpers.mailer.sender_name", $config["mailer"]["sender_name"]);
 
         $loader = new YamlFileLoader($container, new FileLocator(__DIR__ . "/../Resources/config"));
         $loader->load("services.yaml");

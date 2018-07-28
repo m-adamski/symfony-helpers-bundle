@@ -2,12 +2,21 @@
 
 namespace Adamski\Symfony\HelpersBundle\Helper;
 
+use Adamski\Symfony\HelpersBundle\Model\MailerMessage;
 use Swift_Mailer;
-use Swift_Message;
-use Swift_Attachment;
 use Twig\Environment;
 
 class MailerHelper {
+
+    /**
+     * @var string
+     */
+    protected $defaultSenderAddress;
+
+    /**
+     * @var string
+     */
+    protected $defaultSenderName;
 
     /**
      * @var Swift_Mailer
@@ -20,76 +29,44 @@ class MailerHelper {
     protected $twigEnvironment;
 
     /**
-     * @var string
-     */
-    protected $defaultSender;
-
-    /**
      * MailerHelper constructor.
      *
+     * @param string       $defaultSenderAddress
+     * @param string       $defaultSenderName
      * @param Swift_Mailer $swiftMailer
      * @param Environment  $twigEnvironment
-     * @param string       $defaultSender
      */
-    public function __construct(Swift_Mailer $swiftMailer, Environment $twigEnvironment, string $defaultSender) {
+    public function __construct(string $defaultSenderAddress, string $defaultSenderName, Swift_Mailer $swiftMailer, Environment $twigEnvironment) {
+        $this->defaultSenderAddress = $defaultSenderAddress;
+        $this->defaultSenderName = $defaultSenderName;
         $this->swiftMailer = $swiftMailer;
         $this->twigEnvironment = $twigEnvironment;
-        $this->defaultSender = $defaultSender;
     }
 
     /**
-     * Send message.
+     * Generate new instance of Mailer Message.
      *
-     * @param array       $recipients
-     * @param string      $subject
-     * @param string      $template
-     * @param array       $data
-     * @param array       $attachments
-     * @param string|null $sender
-     * @param array       $recipientsBCC
-     * @param array       $recipientsCC
-     * @return bool
+     * @param null|string $subject
+     * @param null|string $body
+     * @param null|string $contentType
+     * @param null|string $charset
+     * @return MailerMessage
      */
-    public function sendMessage(array $recipients, string $subject, string $template, array $data = [],
-                                array $attachments = [], string $sender = null, array $recipientsBCC = [],
-                                array $recipientsCC = []
-    ) {
+    public function buildMessage(?string $subject = null, ?string $body = null, ?string $contentType = null, ?string $charset = null) {
+        return new MailerMessage(
+            $this->twigEnvironment, $this->defaultSenderAddress, $this->defaultSenderName, $subject, $body, $contentType, $charset
+        );
+    }
 
-        try {
-
-            // Generate Swift Message
-            $message = new Swift_Message($subject);
-            $message->setTo($recipients)
-                ->setBody($this->twigEnvironment->render($template, $data), "text/html");
-
-            // Sender address
-            $message->setFrom(
-                $sender ? $sender : $this->defaultSender
-            );
-
-            // Recipients CC
-            if (count($recipientsCC) > 0) {
-                $message->setCc($recipientsCC);
-            }
-
-            // Recipients BCC
-            if (count($recipientsBCC) > 0) {
-                $message->setBcc($recipientsBCC);
-            }
-
-            // Attach specified files
-            if (count($attachments) > 0) {
-                foreach ($attachments as $attachment) {
-                    if (file_exists($attachment)) {
-                        $message->attach(Swift_Attachment::fromPath($attachment));
-                    }
-                }
-            }
-
-            // Send message
-            return $this->swiftMailer->send($message) > 0;
-        } catch (\Exception $exception) {
-            return false;
-        }
+    /**
+     * Send provided message.
+     * Function return the number of successful recipients. Can be zero which indicates failure.
+     *
+     * @param MailerMessage $mailerMessage
+     * @param array|null    $failedRecipients
+     * @return int
+     */
+    public function sendMessage(MailerMessage $mailerMessage, ?array &$failedRecipients = null) {
+        return $this->swiftMailer->send($mailerMessage, $failedRecipients);
     }
 }
