@@ -32,7 +32,7 @@ class MailerMessage extends Swift_Message {
         $this->defaultSenderAddress = $defaultSenderAddress;
         $this->defaultSenderName = $defaultSenderName;
 
-        parent::setSender(
+        parent::setFrom(
             $defaultSenderAddress, $defaultSenderName
         );
     }
