@@ -3,10 +3,6 @@
 namespace Adamski\Symfony\HelpersBundle\Model;
 
 use Swift_Message;
-use Twig_Error_Loader;
-use Twig_Error_Runtime;
-use Twig_Error_Syntax;
-use Twig\Environment;
 
 class MailerMessage extends Swift_Message {
 
@@ -21,14 +17,8 @@ class MailerMessage extends Swift_Message {
     protected $defaultSenderName;
 
     /**
-     * @var Environment
-     */
-    protected $twigEnvironment;
-
-    /**
      * MailerMessage constructor.
      *
-     * @param Environment $twigEnvironment
      * @param string      $defaultSenderAddress
      * @param string      $defaultSenderName
      * @param null|string $subject
@@ -36,12 +26,11 @@ class MailerMessage extends Swift_Message {
      * @param null|string $contentType
      * @param null|string $charset
      */
-    public function __construct(Environment $twigEnvironment, string $defaultSenderAddress, string $defaultSenderName, ?string $subject = null, ?string $body = null, ?string $contentType = null, ?string $charset = null) {
+    public function __construct(string $defaultSenderAddress, string $defaultSenderName, ?string $subject = null, ?string $body = null, ?string $contentType = null, ?string $charset = null) {
         parent::__construct($subject, $body, $contentType, $charset);
 
         $this->defaultSenderAddress = $defaultSenderAddress;
         $this->defaultSenderName = $defaultSenderName;
-        $this->twigEnvironment = $twigEnvironment;
 
         parent::setSender(
             $defaultSenderAddress, $defaultSenderName
@@ -49,19 +38,15 @@ class MailerMessage extends Swift_Message {
     }
 
     /**
-     * Render provided template file and set result as body of the message.
+     * Set provided HTML content to body of the message.
      *
-     * @param string $template
-     * @param array  $data
+     * @param string $content
      * @param null   $charset
      * @return Swift_Message
-     * @throws Twig_Error_Loader
-     * @throws Twig_Error_Runtime
-     * @throws Twig_Error_Syntax
      */
-    public function setHTMLBody(string $template, array $data = [], $charset = null) {
+    public function setHTMLBody(string $content, $charset = null) {
         return parent::setBody(
-            $this->twigEnvironment->render($template, $data), "text/html", $charset
+            $content, "text/html", $charset
         );
     }
 

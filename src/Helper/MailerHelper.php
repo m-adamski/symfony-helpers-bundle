@@ -5,6 +5,9 @@ namespace Adamski\Symfony\HelpersBundle\Helper;
 use Adamski\Symfony\HelpersBundle\Model\MailerMessage;
 use Swift_Mailer;
 use Twig\Environment;
+use Twig_Error_Loader;
+use Twig_Error_Runtime;
+use Twig_Error_Syntax;
 
 class MailerHelper {
 
@@ -54,7 +57,7 @@ class MailerHelper {
      */
     public function buildMessage(?string $subject = null, ?string $body = null, ?string $contentType = null, ?string $charset = null) {
         return new MailerMessage(
-            $this->twigEnvironment, $this->defaultSenderAddress, $this->defaultSenderName, $subject, $body, $contentType, $charset
+            $this->defaultSenderAddress, $this->defaultSenderName, $subject, $body, $contentType, $charset
         );
     }
 
@@ -68,5 +71,19 @@ class MailerHelper {
      */
     public function sendMessage(MailerMessage $mailerMessage, ?array &$failedRecipients = null) {
         return $this->swiftMailer->send($mailerMessage, $failedRecipients);
+    }
+
+    /**
+     * Render template with provided data.
+     *
+     * @param string $template
+     * @param array  $context
+     * @return string
+     * @throws Twig_Error_Loader
+     * @throws Twig_Error_Runtime
+     * @throws Twig_Error_Syntax
+     */
+    public function renderTemplate(string $template, array $context = []) {
+        return $this->twigEnvironment->render($template, $context);
     }
 }
