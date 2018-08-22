@@ -198,6 +198,15 @@ class PDFDocument {
     }
 
     /**
+     * Get document data.
+     *
+     * @return string
+     */
+    public function getPDFData() {
+        return $this->pdfGenerator->getPDFData();
+    }
+
+    /**
      * @return string
      */
     public function getCreator() {
@@ -312,7 +321,9 @@ class PDFDocument {
     protected function includeConfig() {
 
         // Overwrite definitions
-        define("K_TCPDF_EXTERNAL_CONFIG", true);
+        if (!defined("K_TCPDF_EXTERNAL_CONFIG")) {
+            define("K_TCPDF_EXTERNAL_CONFIG", true);
+        }
 
         /**
          * Installation path (/var/www/tcpdf/).
@@ -330,9 +341,11 @@ class PDFDocument {
          * Path for PDF fonts.
          * By default it is automatically set but you can also set it as a fixed string to improve performances.
          */
-        define("K_PATH_FONTS", $this->directoryHelper->generatePath([
-            $this->directoryHelper->getLibrariesDirectory(), "pdf-generator", "fonts"
-        ]));
+        if (!defined("K_PATH_FONTS")) {
+            define("K_PATH_FONTS", $this->directoryHelper->generatePath([
+                $this->directoryHelper->getLibrariesDirectory(), "pdf-generator", "fonts"
+            ]));
+        }
 
         /**
          * Default images directory.
@@ -359,142 +372,198 @@ class PDFDocument {
         /**
          * Generic name for a blank image.
          */
-        define("K_BLANK_IMAGE", "_blank.png");
+        if (!defined("K_BLANK_IMAGE")) {
+            define("K_BLANK_IMAGE", "_blank.png");
+        }
 
         /**
          * Page format.
          */
-        define("PDF_PAGE_FORMAT", "A4");
+        if (!defined("PDF_PAGE_FORMAT")) {
+            define("PDF_PAGE_FORMAT", "A4");
+        }
 
         /**
          * Page orientation (P=portrait, L=landscape).
          */
-        define("PDF_PAGE_ORIENTATION", "P");
+        if (!defined("PDF_PAGE_ORIENTATION")) {
+            define("PDF_PAGE_ORIENTATION", "P");
+        }
 
         /**
          * Document creator.
          */
-        define("PDF_CREATOR", "");
+        if (!defined("PDF_CREATOR")) {
+            define("PDF_CREATOR", "");
+        }
 
         /**
          * Document author.
          */
-        define("PDF_AUTHOR", "");
+        if (!defined("PDF_AUTHOR")) {
+            define("PDF_AUTHOR", "");
+        }
 
         /**
          * Header title.
          */
-        define("PDF_HEADER_TITLE", "");
+        if (!defined("PDF_HEADER_TITLE")) {
+            define("PDF_HEADER_TITLE", "");
+        }
 
         /**
          * Header description string.
          */
-        define("PDF_HEADER_STRING", "");
+        if (!defined("PDF_HEADER_STRING")) {
+            define("PDF_HEADER_STRING", "");
+        }
 
         /**
          * Document unit of measure [pt=point, mm=millimeter, cm=centimeter, in=inch].
          */
-        define("PDF_UNIT", "mm");
+        if (!defined("PDF_UNIT")) {
+            define("PDF_UNIT", "mm");
+        }
 
         /**
          * Header margin.
          */
-        define("PDF_MARGIN_HEADER", 5);
+        if (!defined("PDF_MARGIN_HEADER")) {
+            define("PDF_MARGIN_HEADER", 5);
+        }
 
         /**
          * Footer margin.
          */
-        define("PDF_MARGIN_FOOTER", 10);
+        if (!defined("PDF_MARGIN_FOOTER")) {
+            define("PDF_MARGIN_FOOTER", 10);
+        }
 
         /**
          * Top margin.
          */
-        define("PDF_MARGIN_TOP", 27);
+        if (!defined("PDF_MARGIN_TOP")) {
+            define("PDF_MARGIN_TOP", 27);
+        }
 
         /**
          * Bottom margin.
          */
-        define("PDF_MARGIN_BOTTOM", 25);
+        if (!defined("PDF_MARGIN_BOTTOM")) {
+            define("PDF_MARGIN_BOTTOM", 25);
+        }
 
         /**
          * Left margin.
          */
-        define("PDF_MARGIN_LEFT", 15);
+        if (!defined("PDF_MARGIN_LEFT")) {
+            define("PDF_MARGIN_LEFT", 15);
+        }
 
         /**
          * Right margin.
          */
-        define("PDF_MARGIN_RIGHT", 15);
+        if (!defined("PDF_MARGIN_RIGHT")) {
+            define("PDF_MARGIN_RIGHT", 15);
+        }
 
         /**
          * Default main font name.
          */
-        define("PDF_FONT_NAME_MAIN", "Lato");
+        if (!defined("PDF_FONT_NAME_MAIN")) {
+            define("PDF_FONT_NAME_MAIN", "Lato");
+        }
 
         /**
          * Default main font size.
          */
-        define("PDF_FONT_SIZE_MAIN", 10);
+        if (!defined("PDF_FONT_SIZE_MAIN")) {
+            define("PDF_FONT_SIZE_MAIN", 10);
+        }
 
         /**
          * Default data font name.
          */
-        define("PDF_FONT_NAME_DATA", "Lato");
+        if (!defined("PDF_FONT_NAME_DATA")) {
+            define("PDF_FONT_NAME_DATA", "Lato");
+        }
 
         /**
          * Default data font size.
          */
-        define("PDF_FONT_SIZE_DATA", 8);
+        if (!defined("PDF_FONT_SIZE_DATA")) {
+            define("PDF_FONT_SIZE_DATA", 8);
+        }
 
         /**
          * Default monospaced font name.
          */
-        define("PDF_FONT_MONOSPACED", "Courier");
+        if (!defined("PDF_FONT_MONOSPACED")) {
+            define("PDF_FONT_MONOSPACED", "Courier");
+        }
 
         /**
          * Ratio used to adjust the conversion of pixels to user units.
          */
-        define("PDF_IMAGE_SCALE_RATIO", 1.25);
+        if (!defined("PDF_IMAGE_SCALE_RATIO")) {
+            define("PDF_IMAGE_SCALE_RATIO", 1.25);
+        }
 
         /**
          * Magnification factor for titles.
          */
-        define("HEAD_MAGNIFICATION", 1.1);
+        if (!defined("HEAD_MAGNIFICATION")) {
+            define("HEAD_MAGNIFICATION", 1.1);
+        }
 
         /**
          * Height of cell respect font height.
          */
-        define("K_CELL_HEIGHT_RATIO", 1.25);
+        if (!defined("K_CELL_HEIGHT_RATIO")) {
+            define("K_CELL_HEIGHT_RATIO", 1.25);
+        }
 
         /**
          * Title magnification respect main font size.
          */
-        define("K_TITLE_MAGNIFICATION", 1.3);
+        if (!defined("K_TITLE_MAGNIFICATION")) {
+            define("K_TITLE_MAGNIFICATION", 1.3);
+        }
 
         /**
          * Reduction factor for small font.
          */
-        define("K_SMALL_RATIO", 2 / 3);
+        if (!defined("K_SMALL_RATIO")) {
+            define("K_SMALL_RATIO", 2 / 3);
+        }
 
         /**
          * Set to true to enable the special procedure used to avoid the overlappind of symbols on Thai language.
          */
-        define("K_THAI_TOPCHARS", true);
+        if (!defined("K_THAI_TOPCHARS")) {
+            define("K_THAI_TOPCHARS", true);
+        }
 
         /**
          * If true allows to call TCPDF methods using HTML syntax
          * IMPORTANT: For security reason, disable this feature if you are printing user HTML content.
          */
-        define("K_TCPDF_CALLS_IN_HTML", true);
+        if (!defined("K_TCPDF_CALLS_IN_HTML")) {
+            define("K_TCPDF_CALLS_IN_HTML", true);
+        }
 
         /**
          * If true and PHP version is greater than 5, then the Error() method throw new exception instead of terminating the execution.
          */
-        define("K_TCPDF_THROW_EXCEPTION_ERROR", false);
+        if (!defined("K_TCPDF_THROW_EXCEPTION_ERROR")) {
+            define("K_TCPDF_THROW_EXCEPTION_ERROR", false);
+        }
 
         /**
          * Default timezone for datetime functions
          */
-        define("K_TIMEZONE", "UTC");
+        if (!defined("K_TIMEZONE")) {
+            define("K_TIMEZONE", "UTC");
+        }
     }
 }
