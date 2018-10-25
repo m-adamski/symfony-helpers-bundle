@@ -1,5 +1,15 @@
 # Helpers Bundle for Symfony 4
 
+**This bundle is deprecated!** Each helper was moved into a separate package:
+
+* [Breadcrumbs Bundle](https://github.com/m-adamski/symfony-breadcrumbs-bundle)
+* [Directory Bundle](https://github.com/m-adamski/symfony-directory-bundle)
+* [Mailer Bundle](https://github.com/m-adamski/symfony-mailer-bundle)
+* [Notification Bundle](https://github.com/m-adamski/symfony-notification-bundle)
+* [PDF Bundle](https://github.com/m-adamski/symfony-pdf-bundle)
+
+---
+
 A collection of tools to improve the implementation of frequently-repeated functionalities:
 
 * Breadcrumbs Helper
